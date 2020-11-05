@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Products - Fashionista</title>
@@ -7,12 +7,27 @@
 </head>
 <body>
 <h1>Products</h1>
-<div class="card" style="width: 18rem;">
-    <img src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F97%2Ff2%2F97f2794870328c37794671f720d46f6b45984077.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]" class="card-img-top" alt="">
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            One of three columns
+        </div>
+        <div class="col-sm">
+            One of three columns
+        </div>
+        <div class="col-sm">
+            One of three columns
+        </div>
+    </div>
+</div>
+
+<div th:each="product : ${products}" class="card" style="width: 18rem;">
+    <img th:src="${product.imageUrl}" src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F97%2Ff2%2F97f2794870328c37794671f720d46f6b45984077.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]" class="card-img-top" alt="">
     <div class="card-body">
-        <h5 class="card-title">Puff-sleeved sequined dress</h5>
-        <p class="card-text">29.99</p>
-        <a href="product" class="btn btn-primary">Go to product</a>
+        <h5 class="card-title" th:text="${product.name}">Puff-sleeved sequined dress</h5>
+        <p class="card-text" th:text="|£${product.price}|">£29.99</p>
+        <a th:href="@{product(id=${product.id})}" href="product" class="btn btn-primary">Go to product</a>
     </div>
 </div>
 </body>

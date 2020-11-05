@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Product info - Fashionista</title>
@@ -10,10 +10,10 @@
 <div class="card" style="width: 80%;">
     <img src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F97%2Ff2%2F97f2794870328c37794671f720d46f6b45984077.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]" class="card-img-top" alt="">
     <div class="card-body">
-        <h5 class="card-title">Puff-sleeved sequined dress</h5>
-        <p class="card-text">Short dress in sequined mesh with a small stand-up collar, a concealed zip at the back and a hook-and-eye fastener at the back of the neck. Short, draped puff sleeves, a seam at the waist and a gently flared skirt. Lined in jersey made from recycled polyester.</p>
-        <p class="card-text">Price: 29.99</p>
-        <a href="#" class="btn btn-primary">Add to cart</a>
+        <h5 class="card-title" th:text="${product.name}">Puff-sleeved sequined dress</h5>
+        <p class="card-text" th:text="${product.description}">Short dress in sequined mesh with a small stand-up collar, a concealed zip at the back and a hook-and-eye fastener at the back of the neck. Short, draped puff sleeves, a seam at the waist and a gently flared skirt. Lined in jersey made from recycled polyester.</p>
+        <p class="card-text" th:text="|£${product.price}|">Price: £29.99</p>
+        <a href="cart" class="btn btn-primary">Add to cart</a>
     </div>
 </div>
 </body>
