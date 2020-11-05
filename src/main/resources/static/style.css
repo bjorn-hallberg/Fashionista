@@ -1,0 +1,10 @@
+body {
+    background: #faf9f8;
+}
+.blog-header-logo {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+    font-size: 2.25rem;
+}
+.text-dark {
+    color: #343a40 !important;
+}
