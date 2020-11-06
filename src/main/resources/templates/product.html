@@ -20,33 +20,37 @@
                 <a class="text-muted" href="#" aria-label="Search">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
                 </a>
-                <a class="btn btn-sm btn-outline-secondary" href="#">Shopping cart</a>
+                <a class="btn btn-sm btn-outline-secondary" th:href="@{/cart}" href="cart.html">Shopping cart
+                    <span th:if="${numberOfItemsInCart} gt 0" th:text="${numberOfItemsInCart}" class="badge badge-secondary badge-pill">3</span>
+                </a>
             </div>
         </div>
     </header>
 
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav">
-            <a class="p-2 text-muted" th:href="@{product(id=${product.id})}" href="home.html">Home</a>
-            <a class="p-2 text-muted" th:href="@{product(id=${product.id})}" href="products.html">Products</a>
-            <a class="p-2 text-muted" href="#">Trends</a>
+            <a class="p-2 text-muted" th:href="@{/}" href="home.html">Home</a>
+            <a class="p-2 text-muted" th:href="@{/products}" href="products.html">Products</a>
+            <a class="p-2 text-muted" href="https://www2.hm.com/en_gb/life/fashion.html">Trends</a>
         </nav>
     </div>
 
 <div class="container">
-    <h1>Product info</h1>
+    <h2>Product info</h2>
     <div class="card mb-3">
         <div class="row no-gutters">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <img th:src="${product.imageUrl}" src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F97%2Ff2%2F97f2794870328c37794671f720d46f6b45984077.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]" class="card-img-top" alt="">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${product.name}">Puff-sleeved sequined dress</h5>
                     <p class="card-text" th:text="${product.description}">Short dress in sequined mesh with a small stand-up collar, a concealed zip at the back and a hook-and-eye fastener at the back of the neck. Short, draped puff sleeves, a seam at the waist and a gently flared skirt. Lined in jersey made from recycled polyester.</p>
                     <p class="card-text" th:text="|£${product.price}|">Price: £29.99</p>
-                    <a th:href="@{product(id=${product.id},add=1)}" href="#" class="btn btn-primary">Add to cart</a>
-                    <p th:if="${addedToCart}">Product has been added to the <a th:href="@{/cart}" href="cart.html">Shopping Cart</a></p>
+                    <p>
+                        <a th:href="@{product(id=${product.id},add=1)}" href="#" class="btn btn-primary">Add to cart</a>
+                        <span th:if="${addedToCart}" class="p-2">The product has been added to the <a th:href="@{/cart}" href="cart.html">Shopping Cart</a></span>
+                    </p>
                 </div>
             </div>
         </div>

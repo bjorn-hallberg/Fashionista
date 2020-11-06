@@ -17,18 +17,47 @@ public class FashionistaController {
     private ProductRepository repository;
 
     @GetMapping
-    public String home() {
+    public String home(Model model, HttpSession session) {
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
+
         return "home";
     }
 
     @GetMapping("/products")
-    public String products(Model model) {
-        List<Product> products = repository.getProducts();
-        Product[][] productList = new Product[products.size() / 4 + 1][4];
-        for (int i = 0; i < products.size(); i++) {
-            productList[i / 4][i % 4] = products.get(i);
+    public String products(Model model, HttpSession session,
+                           @RequestParam(required = false, defaultValue = "") String category) {
+
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+
+        List<Product> products;
+        if (category == null || category.isEmpty()) {
+            products = repository.getProducts();
+        } else {
+            products = repository.getProductsByCategory(Category.valueOf(category));
         }
+
+//        Product[][] productList = new Product[products.size() / 4 + 1][4];
+//        for (int i = 0; i < products.size(); i++) {
+//            productList[i / 4][i % 4] = products.get(i);
+//        }
+        List<List<Product>> productList = new ArrayList<>();
+        List<Product> row = new ArrayList<>();
+        for (int i = 0; i < products.size(); i++) {
+            if (i%4 == 0) {
+                row = new ArrayList<>();
+            }
+            row.add(products.get(i));
+            if (i % 4 == 3) {
+                productList.add(row);
+            }
+        }
+        if (products.size() % 4 != 0) {
+            productList.add(row);
+        }
+
         model.addAttribute("productList", productList);
+        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
 
         return "products";
     }
@@ -38,9 +67,10 @@ public class FashionistaController {
                           @RequestParam(required = false, defaultValue = "0") Long id,
                           @RequestParam(required = false, defaultValue = "0") int add) {
 
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+
         boolean addedToCart = false;
         if (add > 0) {
-            List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
             if (cart == null)
                 cart = new ArrayList<>();
             cart.add(new CartItem(repository.getProduct(id), add));
@@ -50,6 +80,7 @@ public class FashionistaController {
 
         model.addAttribute("product", repository.getProduct(id));
         model.addAttribute("addedToCart", addedToCart);
+        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
 
         return "product";
     }
@@ -71,8 +102,8 @@ public class FashionistaController {
                 totalAmount += item.product.price * item.quantity;
             }
         }
-
         model.addAttribute("totalAmount", Math.round(totalAmount * 100.0) / 100.0);
+        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
 
         return "cart";
     }
@@ -88,9 +119,8 @@ public class FashionistaController {
                 totalAmount += item.product.price * item.quantity;
             }
         }
-
         model.addAttribute("totalAmount", totalAmount);
-        model.addAttribute("numberOfItems", cart.size());
+        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
 
         return "checkout";
     }

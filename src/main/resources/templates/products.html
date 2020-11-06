@@ -20,21 +20,31 @@
                 <a class="text-muted" href="#" aria-label="Search">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
                 </a>
-                <a class="btn btn-sm btn-outline-secondary" href="#">Shopping cart</a>
+                <a class="btn btn-sm btn-outline-secondary" th:href="@{/cart}" href="cart.html">Shopping cart
+                    <span th:if="${numberOfItemsInCart} gt 0" th:text="${numberOfItemsInCart}" class="badge badge-secondary badge-pill">3</span>
+                </a>
             </div>
         </div>
     </header>
 
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav">
-            <a class="p-2 text-muted" th:href="@{product(id=${product.id})}" href="home.html">Home</a>
-            <a class="p-2 text-muted" th:href="@{product(id=${product.id})}" href="products.html">Products</a>
-            <a class="p-2 text-muted" href="#">Trends</a>
+            <a class="p-2 text-muted" th:href="@{/}" href="home.html">Home</a>
+            <a class="p-2 text-muted" th:href="@{/products}" href="products.html">Products</a>
+            <a class="p-2 text-muted" href="https://www2.hm.com/en_gb/life/fashion.html">Trends</a>
         </nav>
     </div>
 
 <div class="container">
-    <h1>Products</h1>
+    <h2>Products</h2>
+    <p>
+        Filter:
+        <a th:href="@{/products}" href="#">All</a> |
+        <a th:href="@{/products(category=BLOUSE)}" href="#">Blouses</a> |
+        <a th:href="@{/products(category=DRESSES)}" href="#">Dresses</a> |
+        <a th:href="@{/products(category=JACKET)}" href="#">Jackets</a> |
+        <a th:href="@{/products(category=TSHIRTS)}" href="#">T-shirts</a>
+    </p>
 
     <div class="container">
         <div th:each="row: ${productList}" class="row mb-4">

@@ -13,6 +13,9 @@ public class ProductRepository {
     public ProductRepository() {
         products.add(new Product(1L, "Puff-sleeved sequined dress", Category.DRESSES, 29.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F97%2Ff2%2F97f2794870328c37794671f720d46f6b45984077.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Short dress in sequined mesh with a small stand-up collar, a concealed zip at the back and a hook-and-eye fastener at the back of the neck. Short, draped puff sleeves, a seam at the waist and a gently flared skirt. Lined in jersey made from recycled polyester."));
         products.add(new Product(2L, "T-shirt Long Fit", Category.TSHIRTS, 6.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F11%2F27%2F1127c1c0c94616e819660927e437a540e84b4db0.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_tshirtstanks_shortsleeve%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Long, round-necked T-shirt in soft jersey with a curved hem."));
+//        for (Long i = 3L; i < 12; i++) {
+//            products.add(new Product(i, "Garment" + i, Category.TSHIRTS, 6.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F11%2F27%2F1127c1c0c94616e819660927e437a540e84b4db0.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_tshirtstanks_shortsleeve%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Long, round-necked T-shirt in soft jersey with a curved hem."));
+//        }
         products.add(new Product(3L, "Satin jacket dress", Category.DRESSES, 49.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F64%2Fbc%2F64bcd79819ac2f0b6faaa688acba0bb2d967de5c.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5BLadies_dresses_wrap%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Short dress in satin with notch lapels and long sleeves. Wrapover front with a hook-and-eye fastener at the front, a concealed, adjustable fastening at one side and wide ties at the other, which define the waist. Unlined."));
         products.add(new Product(4L, "Twill shirt jacket", Category.JACKET, 24.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fda%2F63%2Fda63367cff420065c8403595f7def93f8bd9cd5e.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_jacketscoats_jackets%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Shirt jacket in cotton twill with a collar, zip down the front and yoke at the back. Flap chest pockets with a concealed press-stud, sleeves with a slit and button at the cuffs, and a straight-cut hem. Unlined."));
         products.add(new Product(5L, "Velvet jacket Skinny Fit", Category.JACKET, 59.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fa1%2Fd1%2Fa1d18d779f3dd339ebdd72dcb2845f8cd1b5ad93.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_blazerssuits_blazers%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Single-breasted jacket in soft cotton velvet with peak lapels, a buttonhole on one lapel, a chest pocket, jetted front pockets and three inner pockets. One button at the front, decorative buttons at the cuffs and a double back vent. Lined. Skinny Fit – a slightly shorter style that shapes in at the chest and tapers sharply at the waist. This, combined with narrow shoulders and sleeves, creates a completely fitted silhouette."));
@@ -27,7 +30,7 @@ public class ProductRepository {
         products.add(new Product(14L, "Puff-sleeved sequined dress", Category.DRESSES, 34.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Ffa%2F04%2Ffa0405f6f058f8ac38cab09b9aaf32a5ca9f7df7.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bladies_dresses_mididresses%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Fitted, calf-length dress in sequined mesh. Stand-up collar with hook-and-eye fasteners at the back of the neck, and short, gathered puff sleeves with a slit. Concealed zip and a slit at the back, and a seam at the waist. Lined in jersey made from recycled polyester."));
         products.add(new Product(15L, "Wool-blend coat", Category.JACKET, 69.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F27%2F91%2F2791f204b7337c8de044f6057504dba9ebcaf68c.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_jacketscoats_coats%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Coat in woven fabric made from a felted wool blend with a stand-up collar and buttons down the front. Diagonal, welt front pockets, two inner pockets, decorative buttons at the cuffs and a single back vent. Lined."));
         products.add(new Product(16L, "Wide blouse", Category.BLOUSE, 12.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fed%2Fc6%2Fedc6addc9de84bba33ae57cca552de84683132c3.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bladies_shirtsblouses_blouses%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Blouse in an airy weave with a stand-up collar and gathers at the top to create soft draping front and back. Opening with covered buttons at the back of the neck, long puff sleeves, cuffs with covered buttons, and a gently rounded hem."));
-
+        products.add(new Product(17L, "Cable-knit cardigan", Category.BLOUSE, 19.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F92%2F74%2F927438a49a63c009e3d1aff21e77ec076415cf31.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bladies_cardigansjumpers_cardigans%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Long cardigan in a soft cable knit containing some wool. V-neck, dropped shoulders and long, wide sleeves. Concealed buttons down the front, tapered waist and ribbing at the cuffs and hem. The polyester content of the cardigan is recycled."));
     }
 
     public List<Product> getProducts() {
@@ -40,5 +43,15 @@ public class ProductRepository {
                 return product;
         }
         return null;
+    }
+
+    public List<Product> getProductsByCategory(Category category) {
+        List<Product> productsInCategory = new ArrayList<>();
+        for (Product product : products) {
+            if (product.category == category)
+                productsInCategory.add(product);
+        }
+
+        return productsInCategory;
     }
 }
