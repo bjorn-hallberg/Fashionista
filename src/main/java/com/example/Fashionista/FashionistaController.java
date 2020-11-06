@@ -23,7 +23,12 @@ public class FashionistaController {
 
     @GetMapping("/products")
     public String products(Model model) {
-        model.addAttribute("products", repository.getProducts());
+        List<Product> products = repository.getProducts();
+        Product[][] productList = new Product[products.size() / 4 + 1][4];
+        for (int i = 0; i < products.size(); i++) {
+            productList[i / 4][i % 4] = products.get(i);
+        }
+        model.addAttribute("productList", productList);
 
         return "products";
     }
@@ -67,7 +72,7 @@ public class FashionistaController {
             }
         }
 
-        model.addAttribute("totalAmount", totalAmount);
+        model.addAttribute("totalAmount", Math.round(totalAmount * 100.0) / 100.0);
 
         return "cart";
     }
