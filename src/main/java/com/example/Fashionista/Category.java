@@ -1,5 +1,5 @@
 package com.example.Fashionista;
 
 public enum Category {
-    DRESSES, TSHIRTS
+    DRESSES, TSHIRTS, JACKET,BLOUSE
 }
