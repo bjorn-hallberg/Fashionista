@@ -27,8 +27,8 @@
 
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav">
-            <a class="p-2 text-muted" href="#">Home</a>
-            <a class="p-2 text-muted" href="#">Products</a>
+            <a class="p-2 text-muted" th:href="@{product(id=${product.id})}" href="home.html">Home</a>
+            <a class="p-2 text-muted" th:href="@{product(id=${product.id})}" href="products.html">Products</a>
             <a class="p-2 text-muted" href="#">Trends</a>
         </nav>
     </div>
