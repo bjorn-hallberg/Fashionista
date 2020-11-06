@@ -10,15 +10,17 @@
 <body>
 <div class="container">
     <h1>Shopping Cart</h1>
-    <table>
+    <table class="table">
+
         <thead>
         <tr>
             <th colspan="2">Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
+            <th >Price</th>
+            <th >Quantity</th>
             <th></th>
         </tr>
         </thead>
+
         <tbody>
         <tr th:each="item,iter : ${session.cart}">
             <td>
@@ -26,8 +28,8 @@
                      src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F97%2Ff2%2F97f2794870328c37794671f720d46f6b45984077.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]" alt="">
             </td>
             <td th:text="${item.product.name}" style="max-width: 400px"> Puff-sleeved sequined dress</td>
-            <td th:text="|£${item.product.price}|">£29.99</td>
-            <td th:text="${item.quantity}" class="text-center">1</td>
+            <td th:text="|£${item.product.price}|" >£29.99</td>
+            <td th:text="${item.quantity}" >1</td>
             <td><a th:href="@{cart(row=${iter.index},remove=1)}" href="#">Remove</a></td>
         </tr>
         <tr>
@@ -37,6 +39,9 @@
         </tr>
         </tbody>
     </table>
+    <p>
+        <a href="/products">Back to Product list</a>
+    </p>
     <p>&nbsp;</p>
     <hr class="mb-4">
     <a th:if="${session.cart != null}" th:href="@{/checkout}" href="checkout.html" class="btn btn-primary btn-lg">Continue to checkout</a>
