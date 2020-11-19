@@ -1,0 +1,15 @@
+CREATE TABLE Product(
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  categoryId BIGINT NOT NULL,
+  price NUMERIC(18,2),
+  imageUrl TEXT,
+  description TEXT
+);
+
+CREATE TABLE Category(
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL
+);
+
+ALTER TABLE Product ADD FOREIGN KEY (categoryId) REFERENCES Category(id);

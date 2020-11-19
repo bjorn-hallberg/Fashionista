@@ -4,15 +4,15 @@ public class Product {
 
     protected Long id;
     protected String name;
-    protected Category category;
+    protected Long categoryId;
     protected double price;
     protected String imageUrl;
     protected String description;
 
-    public Product(Long id, String name, Category category, double price, String imageUrl, String description) {
+    public Product(Long id, String name, Long categoryId, double price, String imageUrl, String description) {
         this.id = id;
         this.name = name;
-        this.category = category;
+        this.categoryId = categoryId;
         this.price = price;
         this.imageUrl = imageUrl;
         this.description = description;
@@ -34,12 +34,12 @@ public class Product {
         this.name = name;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public double getPrice() {

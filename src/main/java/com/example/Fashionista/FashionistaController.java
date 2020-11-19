@@ -26,15 +26,15 @@ public class FashionistaController {
 
     @GetMapping("/products")
     public String products(Model model, HttpSession session,
-                           @RequestParam(required = false, defaultValue = "") String category) {
+                           @RequestParam(required = false, defaultValue = "0") Long category) {
 
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 
         List<Product> products;
-        if (category == null || category.isEmpty()) {
+        if (category == null || category == 0) {
             products = repository.getProducts();
         } else {
-            products = repository.getProductsByCategory(Category.valueOf(category));
+            products = repository.getProductsByCategory(category);
         }
 
 //        Product[][] productList = new Product[products.size() / 4 + 1][4];

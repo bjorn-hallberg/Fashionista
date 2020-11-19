@@ -1,16 +1,29 @@
 package com.example.Fashionista;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Service
+@Repository
 public class ProductRepository {
 
+    @Autowired
+    private DataSource dataSource;
     protected List<Product> products = new ArrayList<>();
+    protected Map<Long, String> categories = new HashMap<Long, String>();
 
     public ProductRepository() {
+        getCategories();
+/*
         products.add(new Product(1L, "Puff-sleeved sequined dress", Category.DRESSES, 29.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F97%2Ff2%2F97f2794870328c37794671f720d46f6b45984077.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Short dress in sequined mesh with a small stand-up collar, a concealed zip at the back and a hook-and-eye fastener at the back of the neck. Short, draped puff sleeves, a seam at the waist and a gently flared skirt. Lined in jersey made from recycled polyester."));
         products.add(new Product(2L, "T-shirt Long Fit", Category.TSHIRTS, 6.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F11%2F27%2F1127c1c0c94616e819660927e437a540e84b4db0.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_tshirtstanks_shortsleeve%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Long, round-necked T-shirt in soft jersey with a curved hem."));
 //        for (Long i = 3L; i < 12; i++) {
@@ -31,27 +44,72 @@ public class ProductRepository {
         products.add(new Product(15L, "Wool-blend coat", Category.JACKET, 69.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F27%2F91%2F2791f204b7337c8de044f6057504dba9ebcaf68c.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_jacketscoats_coats%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Coat in woven fabric made from a felted wool blend with a stand-up collar and buttons down the front. Diagonal, welt front pockets, two inner pockets, decorative buttons at the cuffs and a single back vent. Lined."));
         products.add(new Product(16L, "Wide blouse", Category.BLOUSE, 12.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2Fed%2Fc6%2Fedc6addc9de84bba33ae57cca552de84683132c3.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bladies_shirtsblouses_blouses%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Blouse in an airy weave with a stand-up collar and gathers at the top to create soft draping front and back. Opening with covered buttons at the back of the neck, long puff sleeves, cuffs with covered buttons, and a gently rounded hem."));
         products.add(new Product(17L, "Cable-knit cardigan", Category.BLOUSE, 19.99, "https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F92%2F74%2F927438a49a63c009e3d1aff21e77ec076415cf31.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bladies_cardigansjumpers_cardigans%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]", "Long cardigan in a soft cable knit containing some wool. V-neck, dropped shoulders and long, wide sleeves. Concealed buttons down the front, tapered waist and ribbing at the cuffs and hem. The polyester content of the cardigan is recycled."));
+*/
+    }
+
+    public void getCategories() {
+        categories = new HashMap<Long, String>();
+        categories.put(1L, "Dresses");
+        categories.put(2L, "T-shirts");
+        categories.put(3L, "Jackets");
+        categories.put(4L, "Blouses");
+
+/*
+        try (Connection conn = dataSource.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT id, name FROM Category")) {
+
+            while (rs.next()) {
+                categories.put(rs.getLong("id"), rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+*/
     }
 
     public List<Product> getProducts() {
+        List<Product> products = new ArrayList<>();
+
+        try (Connection conn = dataSource.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT id, name, categoryId, price, imageUrl, description FROM Product")) {
+
+            while (rs.next()) {
+                products.add(rsProduct(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return products;
     }
 
     public Product getProduct(Long id) {
         for (Product product : products) {
-            if (product.id == id)
+            if (product.id.equals(id))
                 return product;
         }
         return null;
     }
 
-    public List<Product> getProductsByCategory(Category category) {
+    public List<Product> getProductsByCategory(Long category) {
         List<Product> productsInCategory = new ArrayList<>();
         for (Product product : products) {
-            if (product.category == category)
+            if (product.categoryId.equals(category))
                 productsInCategory.add(product);
         }
 
         return productsInCategory;
+    }
+
+    private Product rsProduct(ResultSet rs) throws SQLException {
+        return new Product(rs.getLong("id"),
+                rs.getString("name"),
+                rs.getLong("categoryId"),
+                rs.getDouble("price"),
+                rs.getString("imageUrl"),
+                rs.getString("description")
+                );
     }
 }
