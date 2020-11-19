@@ -126,30 +126,4 @@ public class ProductRepository {
         );
     }
 
-    public boolean insertCustomer(Customer customer) {
-        int generatedId = -1;
-
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO Customer (firstName, lastName, email, address, address2, country, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, customer.getFirstName());
-            ps.setString(2, customer.getLastName());
-            ps.setString(3, customer.getEmail());
-            ps.setString(4, customer.getAddress());
-            ps.setString(5, customer.getAddress2());
-            ps.setString(6, customer.getCountry());
-            ps.setString(7, customer.getState());
-            ps.setString(8, customer.getZip());
-            ps.executeUpdate();
-
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                generatedId = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return generatedId > 0;
-    }
-
 }

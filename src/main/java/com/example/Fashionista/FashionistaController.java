@@ -16,7 +16,10 @@ import java.util.List;
 public class FashionistaController {
 
     @Autowired
-    private ProductRepository repository;
+    private ProductRepository productRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @GetMapping
     public String home(Model model, HttpSession session) {
@@ -34,9 +37,9 @@ public class FashionistaController {
 
         List<Product> products;
         if (category == null || category == 0) {
-            products = repository.getProducts();
+            products = productRepository.getProducts();
         } else {
-            products = repository.getProductsByCategory(category);
+            products = productRepository.getProductsByCategory(category);
         }
 
 //        Product[][] productList = new Product[products.size() / 4 + 1][4];
@@ -75,12 +78,12 @@ public class FashionistaController {
         if (add > 0) {
             if (cart == null)
                 cart = new ArrayList<>();
-            cart.add(new CartItem(repository.getProduct(id), add));
+            cart.add(new CartItem(productRepository.getProduct(id), add));
             session.setAttribute("cart", cart);
             addedToCart = true;
         }
 
-        model.addAttribute("product", repository.getProduct(id));
+        model.addAttribute("product", productRepository.getProduct(id));
         model.addAttribute("addedToCart", addedToCart);
         model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
 
@@ -141,7 +144,7 @@ public class FashionistaController {
         model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
 
-        repository.insertCustomer(customer);
+        customerRepository.insertCustomer(customer);
 
         return "checkout";
     }
@@ -152,4 +155,5 @@ public class FashionistaController {
         model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
     return "MyPage";
     }
+
 }
