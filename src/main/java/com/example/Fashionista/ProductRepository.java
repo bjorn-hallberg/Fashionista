@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +15,7 @@ public class ProductRepository {
 
     @Autowired
     private DataSource dataSource;
-    protected List<Product> products = new ArrayList<>();
+
     protected Map<Long, String> categories = new HashMap<Long, String>();
 
     public ProductRepository() {
@@ -86,18 +83,34 @@ public class ProductRepository {
     }
 
     public Product getProduct(Long id) {
-        for (Product product : products) {
-            if (product.id.equals(id))
-                return product;
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("SELECT id, name, categoryId, price, imageUrl, description FROM Product WHERE id=?");
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rsProduct(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         return null;
     }
 
-    public List<Product> getProductsByCategory(Long category) {
+    public List<Product> getProductsByCategory(Long categoryId) {
         List<Product> productsInCategory = new ArrayList<>();
-        for (Product product : products) {
-            if (product.categoryId.equals(category))
-                productsInCategory.add(product);
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("SELECT id, name, categoryId, price, imageUrl, description FROM Product WHERE categoryId=?");
+            ps.setLong(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                productsInCategory.add(rsProduct(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return productsInCategory;
@@ -110,6 +123,6 @@ public class ProductRepository {
                 rs.getDouble("price"),
                 rs.getString("imageUrl"),
                 rs.getString("description")
-                );
+        );
     }
 }
