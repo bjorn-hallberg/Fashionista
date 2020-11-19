@@ -18,10 +18,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/", "/cart", "/checkout", "/product", "/products").permitAll()
+                .antMatchers("/", "/cart", "/checkout", "/product", "/products", "/h2", "/h2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().defaultSuccessUrl("/MyPage", true);    }
+                .formLogin().defaultSuccessUrl("/MyPage", true);
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -29,7 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         manager.createUser(User.withDefaultPasswordEncoder().username("user").password("123").roles("USER").build());
         manager.createUser(User.withDefaultPasswordEncoder().username("anna@hm.com").password("123").roles("USER").build());
         manager.createUser(User.withDefaultPasswordEncoder().username("bertil@hm.com").password("123").roles("USER").build());
-
 
         return manager;
     }
