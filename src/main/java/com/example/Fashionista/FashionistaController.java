@@ -124,4 +124,10 @@ public class FashionistaController {
 
         return "checkout";
     }
+    @GetMapping("/MyPage")
+    public String MyPage(Model model, HttpSession session){
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
+    return "MyPage";
+    }
 }
