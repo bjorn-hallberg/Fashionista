@@ -24,7 +24,7 @@
                 </a>
 
                 <a class="btn btn-sm btn-outline-secondary" th:href="@{/cart}" href="cart.html">Shopping cart
-                    <span th:if="${numberOfItemsInCart} gt 0" th:text="${numberOfItemsInCart}" class="badge badge-secondary badge-pill">3</span>
+                    <span th:if="${session.cart != null}" th:text="${session.cart.numberOfItems()}" class="badge badge-secondary badge-pill">3</span>
                 </a>
                 <a class="btn btn-sm btn-outline-secondary" th:href="@{/MyPage}" href="MyPage.html">My Page
                 </a>
@@ -46,14 +46,14 @@
         <thead>
         <tr>
             <th colspan="2">Product</th>
-            <th >Price</th>
-            <th >Quantity</th>
+            <th>Price</th>
+            <th>Quantity</th>
             <th></th>
         </tr>
         </thead>
 
-        <tbody>
-        <tr th:each="item,iter : ${session.cart}">
+        <tbody th:if="${session.cart != null}">
+        <tr th:each="item,iter : ${session.cart.getCartItems()}">
             <td>
                 <img th:src="${item.product.imageUrl}" style="max-width: 50px"
                      src="https://lp2.hm.com/hmgoepprod?set=quality%5B79%5D%2Csource%5B%2F97%2Ff2%2F97f2794870328c37794671f720d46f6b45984077.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BLOOKBOOK%5D%2Cres%5Bm%5D%2Chmver%5B1%5D&call=url[file:/product/main]" alt="">
@@ -61,11 +61,11 @@
             <td th:text="${item.product.name}" style="max-width: 400px"> Puff-sleeved sequined dress</td>
             <td th:text="|£${item.product.price}|" >£29.99</td>
             <td th:text="${item.quantity}" >1</td>
-            <td><a th:href="@{cart(row=${iter.index},remove=1)}" href="#">Remove</a></td>
+            <td><a th:href="@{/cart(row=${iter.index},remove=1)}" href="#">Remove</a></td>
         </tr>
         <tr>
             <td colspan="2" style="text-align: right">Total amount:</td>
-            <td th:text="|£${totalAmount}|">£29.99</td>
+            <td th:text="|£${session.cart.totalAmount()}|">£29.99</td>
             <td colspan="2"></td>
         </tr>
         </tbody>
@@ -74,7 +74,7 @@
         <a th:href="@{/products}" href="products.html">Back to Product list</a>
     </p>
     <hr class="mb-4">
-    <a th:if="${session.cart} != null and ${session.cart.size()} gt 0" th:href="@{/checkout}" href="checkout.html" class="btn btn-primary btn-lg">Continue to checkout</a>
+    <a th:if="${session.cart} != null and ${session.cart.numberOfItems()} gt 0" th:href="@{/checkout}" href="checkout.html" class="btn btn-primary btn-lg">Continue to checkout</a>
     <p>&nbsp;</p>
 </div>
 </body>

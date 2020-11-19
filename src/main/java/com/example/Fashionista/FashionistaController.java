@@ -22,18 +22,13 @@ public class FashionistaController {
     private CustomerRepository customerRepository;
 
     @GetMapping
-    public String home(Model model, HttpSession session) {
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
-
+    public String home() {
         return "home";
     }
 
     @GetMapping("/products")
-    public String products(Model model, HttpSession session,
+    public String products(Model model,
                            @RequestParam(required = false, defaultValue = "0") Long category) {
-
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 
         List<Product> products;
         if (category == null || category == 0) {
@@ -42,14 +37,10 @@ public class FashionistaController {
             products = productRepository.getProductsByCategory(category);
         }
 
-//        Product[][] productList = new Product[products.size() / 4 + 1][4];
-//        for (int i = 0; i < products.size(); i++) {
-//            productList[i / 4][i % 4] = products.get(i);
-//        }
         List<List<Product>> productList = new ArrayList<>();
         List<Product> row = new ArrayList<>();
         for (int i = 0; i < products.size(); i++) {
-            if (i%4 == 0) {
+            if (i % 4 == 0) {
                 row = new ArrayList<>();
             }
             row.add(products.get(i));
@@ -62,7 +53,6 @@ public class FashionistaController {
         }
 
         model.addAttribute("productList", productList);
-        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
 
         return "products";
     }
@@ -72,20 +62,19 @@ public class FashionistaController {
                           @RequestParam(required = false, defaultValue = "0") Long id,
                           @RequestParam(required = false, defaultValue = "0") int add) {
 
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        Cart cart = (Cart) session.getAttribute("cart");
 
         boolean addedToCart = false;
         if (add > 0) {
             if (cart == null)
-                cart = new ArrayList<>();
-            cart.add(new CartItem(productRepository.getProduct(id), add));
+                cart = new Cart();
+            cart.addItem(productRepository.getProduct(id), 1);
             session.setAttribute("cart", cart);
             addedToCart = true;
         }
 
         model.addAttribute("product", productRepository.getProduct(id));
         model.addAttribute("addedToCart", addedToCart);
-        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
 
         return "product";
     }
@@ -95,65 +84,30 @@ public class FashionistaController {
                        @RequestParam(required = false, defaultValue = "0") int row,
                        @RequestParam(required = false, defaultValue = "0") int remove) {
 
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        Cart cart = (Cart) session.getAttribute("cart");
 
         if (remove > 0) {
-            cart.remove(row);
+            cart.removeItem(row);
         }
-
-        double totalAmount = 0;
-        if (cart != null) {
-            for (CartItem item : cart) {
-                totalAmount += item.product.price * item.quantity;
-            }
-        }
-        model.addAttribute("totalAmount", Math.round(totalAmount * 100.0) / 100.0);
-        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
 
         return "cart";
     }
 
     @GetMapping("/checkout")
-    public String checkout(Model model, HttpSession session, @ModelAttribute Customer customer) {
-
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-
-        double totalAmount = 0;
-        if (cart != null) {
-            for (CartItem item : cart) {
-                totalAmount += item.product.price * item.quantity;
-            }
-        }
-        model.addAttribute("totalAmount", totalAmount);
-        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
-
+    public String checkout(@ModelAttribute Customer customer) {
         return "checkout";
     }
 
     @PostMapping("/checkout")
-    public String checkoutSubmit(Model model, HttpSession session, @ModelAttribute Customer customer) {
-
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-
-        double totalAmount = 0;
-        if (cart != null) {
-            for (CartItem item : cart) {
-                totalAmount += item.product.price * item.quantity;
-            }
-        }
-        model.addAttribute("totalAmount", totalAmount);
-        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
-
+    public String checkoutSubmit(@ModelAttribute Customer customer) {
         customerRepository.insertCustomer(customer);
 
         return "checkout";
     }
 
     @GetMapping("/MyPage")
-    public String MyPage(Model model, HttpSession session){
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
-    return "MyPage";
+    public String MyPage() {
+        return "MyPage";
     }
 
 }
