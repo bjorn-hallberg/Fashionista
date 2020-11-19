@@ -13,3 +13,33 @@ CREATE TABLE Category(
 );
 
 ALTER TABLE Product ADD FOREIGN KEY (categoryId) REFERENCES Category(id);
+
+CREATE TABLE Customer(
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  firstName VARCHAR(50) NOT NULL,
+  lastName VARCHAR(50) NOT NULL,
+  email VARCHAR(100),
+  address VARCHAR(50),
+  address2 VARCHAR(50),
+  country VARCHAR(50),
+  state VARCHAR(50),
+  zip VARCHAR(50)
+);
+
+CREATE TABLE Orders(
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  customerID BIGINT NOT NULL,
+  orderDate DATE NOT NULL DEFAULT CURDATE(),
+  totalAmount NUMERIC(18,2) NOT NULL
+);
+
+CREATE TABLE OrderRow(
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  orderID BIGINT NOT NULL,
+  productId BIGINT NOT NULL,
+  quantity INT NOT NULL
+);
+
+ALTER TABLE Orders ADD FOREIGN KEY (customerID) REFERENCES Customer(id);
+ALTER TABLE OrderRow ADD FOREIGN KEY (orderId) REFERENCES Orders(id);
+ALTER TABLE OrderRow ADD FOREIGN KEY (productId) REFERENCES Product(id);

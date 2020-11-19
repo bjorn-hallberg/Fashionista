@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
@@ -109,7 +111,7 @@ public class FashionistaController {
     }
 
     @GetMapping("/checkout")
-    public String checkout(Model model, HttpSession session) {
+    public String checkout(Model model, HttpSession session, @ModelAttribute Customer customer) {
 
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 
@@ -121,6 +123,25 @@ public class FashionistaController {
         }
         model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
+
+        return "checkout";
+    }
+
+    @PostMapping("/checkout")
+    public String checkoutSubmit(Model model, HttpSession session, @ModelAttribute Customer customer) {
+
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+
+        double totalAmount = 0;
+        if (cart != null) {
+            for (CartItem item : cart) {
+                totalAmount += item.product.price * item.quantity;
+            }
+        }
+        model.addAttribute("totalAmount", totalAmount);
+        model.addAttribute("numberOfItemsInCart", cart == null ? 0 : cart.size());
+
+        repository.insertCustomer(customer);
 
         return "checkout";
     }
