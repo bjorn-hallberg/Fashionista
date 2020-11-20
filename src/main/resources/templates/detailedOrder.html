@@ -35,43 +35,38 @@
         </nav>
     </div>
 
+    <h1>Detailed Order Information </h1>
 
     <div class="container">
-        <h1>All Orders </h1>
-
         <table class="table">
             <thead>
             <tr>
-                <th>Order Id</th>
-                <th>Customer First name</th>
-                <th>Customer Last name</th>
-                <th>Customer Order Date</th>
-                <th>Customer Total Amount</th>
+                <th>Product id</th>
+                <th>Product Name</th>
+                <th>Product price</th>
+
             </thead>
             </tr>
-            <tr th:each="order: ${orders}">
+            <tr th:each="rows: ${orderrows}">
+                <td th:text="${rows.product.id}"></td>
+                <td th:text="${rows.product.name}"></td>
+                <td th:text="${rows.product.price}"></td>
 
-                <td><a  th:href="@{detailedOrder(id=${order.id})}" href="detailedOrder.html" th:text="${order.id}"></a></td>
-
-                <td th:text="${order.customer.firstName}"></td>
-                <td th:text="${order.customer.lastName}"></td>
-                <td th:text="${order.orderDate}"></td>
-                <td th:text="${order.totalAmount}"></td>
 
             </tr>
         </table>
     </div>
 
-<p th:text="${'Logged in as: ' + #httpServletRequest.remoteUser}"></p>
+    <p th:text="${'Logged in as: ' + #httpServletRequest.remoteUser}"></p>
 
 
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Logout"/>
-</form>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout"/>
+    </form>
 
 </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
 </body>
 </html>

@@ -21,7 +21,7 @@ public class FashionistaController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @GetMapping
+    @GetMapping("/")
     public String home() {
         return "home";
     }
@@ -115,4 +115,10 @@ public class FashionistaController {
         return "AdminPage";
     }
 
+    @GetMapping("/detailedOrder")
+    public String detailedOrder(Model model,
+                                @RequestParam(required = false, defaultValue = "0") Long id) {
+        model.addAttribute("orderrows",(orderRepository.getOrderRows(id)));
+        return "detailedOrder";
+    }
 }

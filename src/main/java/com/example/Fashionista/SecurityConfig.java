@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/", "/cart", "/checkout", "/product", "/products", "/h2", "/h2/**").permitAll()
+                .antMatchers("/", "/cart", "/checkout", "/product", "/style.css","/products", "/Images/**","/detailedOrder", "/h2", "/h2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().defaultSuccessUrl("/AdminPage", true);
