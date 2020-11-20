@@ -24,7 +24,7 @@ public class Cart {
         for (CartItem item : cartItems) {
             totalAmount += item.product.price * item.quantity;
         }
-        return totalAmount;
+        return Math.round(totalAmount * 100.0) / 100.0;
     }
 
     public void addItem(Product product, int quantity) {

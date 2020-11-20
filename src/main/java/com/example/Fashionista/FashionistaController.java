@@ -19,7 +19,7 @@ public class FashionistaController {
     private ProductRepository productRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private OrderRepository orderRepository;
 
     @GetMapping
     public String home() {
@@ -99,8 +99,12 @@ public class FashionistaController {
     }
 
     @PostMapping("/checkout")
-    public String checkoutSubmit(@ModelAttribute Customer customer) {
-        customerRepository.insertCustomer(customer);
+    public String checkoutSubmit(HttpSession session, @ModelAttribute Customer customer) {
+        Cart cart = (Cart) session.getAttribute("cart");
+
+        orderRepository.saveOrder(customer, cart);
+
+        session.setAttribute("cart", null);
 
         return "checkout";
     }
