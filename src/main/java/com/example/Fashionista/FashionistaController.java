@@ -106,7 +106,7 @@ public class FashionistaController {
 
         session.setAttribute("cart", null);
 
-        return "checkout";
+        return "checkout-complete";
     }
 
     @GetMapping("/MyPage")
