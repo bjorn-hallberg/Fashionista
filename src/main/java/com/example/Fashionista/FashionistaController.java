@@ -109,9 +109,10 @@ public class FashionistaController {
         return "checkout-complete";
     }
 
-    @GetMapping("/MyPage")
-    public String MyPage() {
-        return "MyPage";
+    @GetMapping("/AdminPage")
+    public String AdminPage(Model model) {
+        model.addAttribute("orders",orderRepository.getOrders());
+        return "AdminPage";
     }
 
 }

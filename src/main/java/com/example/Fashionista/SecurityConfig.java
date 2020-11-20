@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/cart", "/checkout", "/product", "/products", "/h2", "/h2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().defaultSuccessUrl("/MyPage", true);
+                .formLogin().defaultSuccessUrl("/AdminPage", true);
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }

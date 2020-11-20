@@ -35,7 +35,29 @@
         </nav>
     </div>
 
-<h1>My Page</h1>
+<h1>All Orders </h1>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Customer First name</th>
+                <th>Customer Last name</th>
+                <th>Customer Order Date</th>
+                <th>Customer Total Amount</th>
+            </thead>
+            </tr>
+            <tr th:each="order: ${orders}">
+                <th th:text="${order.id}"></th>
+                <th th:text="${order.customer.firstName}"></th>
+                <th th:text="${order.customer.lastName}"></th>
+                <th th:text="${order.orderDate}"></th>
+                <th th:text="${order.totalAmount}"></th>
+
+            </tr>
+        </table>
+    </div>
 
 <p th:text="${'Logged in as: ' + #httpServletRequest.remoteUser}"></p>
 
