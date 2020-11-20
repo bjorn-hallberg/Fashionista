@@ -34,6 +34,22 @@ public class OrderRepository {
         return orders;
     }
 
+    public Order getOrder(Long id) {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("SELECT id, customerId, orderDate, totalAmount FROM Orders WHERE id=?");
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rsOrder(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public List<OrderRow> getOrderRows(Long orderId) {
         List<OrderRow> orderRows = new ArrayList<>();
 
